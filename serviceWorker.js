@@ -1,44 +1,67 @@
+var cacheS;
+
 self.addEventListener('install', event => {//lors du chargement de index.html
-  // self.skipwaiting();
-  console.log("ServiceWorker en cours d'installation…");
+  self.skipWaiting();//il supplante tout de suite l'ancien
+  console.log("ServiceWorker installé");
 });
 
-//si le cache est ancien, il faut essayer de la rafraîchir
 self.addEventListener('activate', event => {
-	//chargement anticipé des pages puisqu'on vise un fonctionnement offline
-	//application experimentale, on ne gère pas les versions de cache
-  // self.skipwaiting();
-  self.clients.claim();
-  console.log("ServiceWorker en cours d'activation");
-  event.waitUntil(caches.open('geoLocCaching')
-	.then(cache=>{return cache.addAll(['/index.html','/styles.css','/serviceWorker.js','/traitement.js']);}))
-	// .catch(e=>{console.log("Error handling cache", e);});
-	console.log('ServiceWorker activé!');
-	// document.getElementById('serviceWorker').innerHTML=' geoLocCaching actif';
+	self.clients.claim();
+	console.log("ServiceWorker activé");
+	var cacheS = new URL(location).searchParams.get('cacheS');
+	console.log('Cache à garder:'+cacheS);
+	return caches.keys().then(noms=>{
+		for(var i=0;i<noms.length;i++){
+			if(noms[i]!=cacheS){
+				return caches.delete(noms[i]);
+				console.log('suppression du cache '+noms[i]);
+			}
+		}
+	});
+	caches.open(cacheS).then(cache=>{
+		return cache.addAll(['/index.html','/styles.css','/serviceWorker.js','/traitement.js']);//tout sauf version.txt //pas de résultat
+		console.log('Cache '+cacheS+ 'mis à jour');
+	});
+
+	// event.waitUntil(caches.open(cacheS))//on complète le cache
+	// .then(cache=>{
+		// return cache.addAll(['/index.html','/styles.css','/serviceWorker.js','/traitement.js']);//tout sauf version.txt
+		// console.log('Cache '+cacheS+ 'mis à jour');
+	// });
+	
+	// caches.open(cacheS);
+	// cacheS.addALL(['/index.html','/styles.css','/serviceWorker.js','/traitement.js']);
+	// console.log('Cache '+cacheS+ 'mis à jour');
 });
 
 //ServiceListener standard qui met en cache tout ce qui passe
 //prévoit un chargement online avec mise en cache si quelquechose manque
 self.addEventListener('fetch', event => {
-  console.log('Redirection de', event.request.url);
-    caches.open('geoLocCaching').then(cache=>{
-      return cache.match(event.request).then(response=> {
-        if (response) {
-          console.log('Réponse trouvée dans le cache:', response);
-          return response;
-        }else{
-			console.log('Réponse à charger sur le serveur');
-			return fetch(event.request).then(networkResponse=>{
-			  cache.put(event.request, networkResponse.clone());
-			  document.getElementById("connection").innerHTML="Online";//on vient d'utiliser la connection
-			  // return networkResponse;
-			});
-		}
-	  }).catch(error=>{
-        // Handles exceptions that arise from match() or fetch().
-		// document.getElementById("connection").innerHTML="Perturbé";//il n'y a plus de connection fiable
-        console.error('Erreur dans le chargement:', error);
-        throw error;
-      });
-    });
+	if(event.request.url.endsWith('version.txt')){
+		console.log('on laisse passer /version.txt');
+		return fetch(event.request);
+	}else{
+		console.log('Redirection de', event.request.url);
+		caches.open(cacheS).then(cache=>{
+		  return cache.match(event.request).then(response=> {
+			if (response) {
+			  console.log('Réponse trouvée dans le cache:', response);
+			  return response;
+			}else{
+				console.log('Pas de réponse dans le cache');
+				//on veut cacher en amont, pas à la volée
+				// console.log('Réponse à charger sur le serveur');
+				// return fetch(event.request).then(networkResponse=>{
+				  // cache.put(event.request, networkResponse.clone());
+				  // document.getElementById("connection").innerHTML="Online";//on vient d'utiliser la connection
+				  // // return networkResponse;
+				// });
+			}
+		  }).catch(error=>{
+			// Handles exceptions that arise from match() or fetch().
+			console.error('Erreur dans le chargement:', error);
+			throw error;
+		  });
+		});
+	}
 });

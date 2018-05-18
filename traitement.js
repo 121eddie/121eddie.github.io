@@ -1,3 +1,17 @@
+//les service workers n'ont pas accès aux APIs synchrones
+//le processus suivant a donc du être délegué ici
+window.addEventListener('message',cacheN=>{
+	if (event.origin='/serviceWorker.js'){
+		var cacheS=localStorage.getItem('cacheS');//on prend le cache par defaut 
+		console.log('ancien cache:'+cacheS);
+		try{//on essaie de rafaîchir avec une requête IP
+
+		}catch(error){
+			console.log("La version du cache n'a pas pu être validée");
+		}
+	}
+});
+
 refreshGPS();
 var mois=['jan','fev','mar','avr','mai','jui','jul','aug','sep','oct','nov','dec'];
 var destEmail=localStorage.getItem('destEmail');
@@ -32,6 +46,7 @@ function success(pos) {
 	connection=(window.navigator.onLine?'online':'offline');
 	console.log('connection:'+connection);
 	document.getElementById('connection').innerHTML=connection;
+	document.getElementById('connection').innerHTML=connection;
 	//mise à jour des coordonnées
 	var coord = pos.coords;
 	latitude=coord.latitude.toPrecision(6);
@@ -40,7 +55,8 @@ function success(pos) {
 	var d=new Date();
 	//29 avr 2018 19h37:05
 	var secDouble=(d.getSeconds()<10?'0':'')+d.getSeconds();
-	miseAjour=d.getHours()+"h"+d.getMinutes()+":"+secDouble+', le '+d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
+	var minuteDouble=(d.getMinutes()<10?'0':'')+d.getMinutes();
+	miseAjour=d.getHours()+"h"+minuteDouble+":"+secDouble+',le '+d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
 	console.log('miseAjour:'+miseAjour);
 	document.getElementById("latitude").innerHTML=latitude;
 	document.getElementById("longitude").innerHTML=longitude;

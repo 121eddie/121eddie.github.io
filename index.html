@@ -5,19 +5,41 @@
 </HEAD>
 <script type="text/javascript">
 	if ( 'serviceWorker' in navigator ) {
-		navigator.serviceWorker.register('serviceWorker.js').then(function(registration) {
-		console.log('ServiceWorker registration successful with scope: ', registration.scope);
-		document.getElementById('worker').innerHTML='serviceWorker.js activé';
+	//on doit mettre la gestion des versions de cache ici car les service workers ne supportent pas les APIs synchrnes (dont local storage)
+		var cacheS=localStorage.getItem('cacheS');//on prend le cache par defaut 
+		//var cacheS=(cacheS!=null?cacheS:'AppliWebProg');//initialisation
+		//var cacheS='test';//on prend le cache par defaut		
+		var oReq=new XMLHttpRequest;
+		oReq.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				const cacheN=oReq.responseText;
+				if(cacheN!=cacheS){
+					//pour ne pas perturber l'utilisation du cache, on délègue la suppression du cache au nouveau chargement du serviceworker
+					localStorage.setItem('cacheS',cacheN);//on enregistre la nouvelle version du cache
+					console.log('Nouvelle version du cache:'+cacheN);
+				}
+			}
+		};
+		oReq.open('GET', './version.txt');
+		oReq.send();
+		//pour ne pas ralentir le chargement, on enregistre tout de suite le service worker
+		//en cas de modification du cache, il faudra rafraîchir la page avant de voir les résultats
+		navigator.serviceWorker.register('serviceWorker.js?cacheS='+localStorage.getItem('cacheS'))
+		.then(function(registration) {//il faut que le serviceworker sache quel cache utiliser
+			console.log('ServiceWorker installé avec le scope: ', registration.scope);
+			document.getElementById('worker').innerHTML='serviceWorker.js actif';
+			document.getElementById('cache').innerHTML='Cache <i>'+cacheS+' actif</i>';
 		}).catch(function(err) {
-		console.log('ServiceWorker registration failed: ', err);
+			console.log("Echec de l'enregistrement du ServiceWorker: ", err);
 		});
-	}
+	}else{window.alert('Votre navigateur ne supporte pas les Service Workers. Ce site ne fonctionnera pas en mode offline')}
 </script>
 <link rel="stylesheet" type="text/css" href="styles.css">
 <BODY>
 <h1>Déterminer ma position et la partager</h1>
-<sinfo>Chargée en mode <i id='connection'>offline</i><br>
-Worker <i id='worker'>non activé</i></sinfo><br>
+<sinfo>Chargé en mode <i id='connection'>offline</i><br>
+Worker <i id='worker'>non activé</i><br>
+<a id='cache'>Pas de cache local</a></sinfo><br>
 <!--afficher la position GPS-->
 <h2>Ma Position GPS</h2>
 <table class='position' id='tablePosition'>
