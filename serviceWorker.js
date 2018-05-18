@@ -10,7 +10,7 @@ self.addEventListener('activate', event => {
 	console.log("ServiceWorker activé");
 	var cacheS = new URL(location).searchParams.get('cacheS');
 	console.log('Cache à garder:'+cacheS);
-	return waitUntil(caches.open(cacheS)).then(cache=>{
+	return caches.open(cacheS).then(cache=>{
 		return cache.addAll(['/index.html','/styles.css','/serviceWorker.js','/traitement.js']);//tout sauf version.txt //pas de résultat
 		console.log('Cache '+cacheS+ 'mis à jour');
 	});	
