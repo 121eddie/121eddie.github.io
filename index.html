@@ -19,6 +19,7 @@
 					console.log('Nouvelle version du cache:'+cacheN);
 				}
 			}
+			//oReq.del();
 		};
 		oReq.open('GET', './version.txt');
 		oReq.send();
@@ -47,7 +48,7 @@ Worker <i id='worker'>non activé</i><br>
 		<th>Latitude</th>
 		<th>Longitude</th>
 		<th>Précision</th>
-		<th>Dernière mise à jour</th>
+		<th>Mis à jour</th>
 		  <!-- <p id="para">Some text here</p> -->
 		<th rowspan=2><button onclick="refreshGPS();">Mettre à jour</button></th>
 	</tr>

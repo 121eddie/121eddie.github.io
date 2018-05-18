@@ -6,22 +6,23 @@ self.addEventListener('install', event => {//lors du chargement de index.html
 });
 
 self.addEventListener('activate', event => {
-	self.clients.claim();
+	self.clients.claim();//le nouveau service worker prend le contrôle de toutes les pages ouvertes
 	console.log("ServiceWorker activé");
 	var cacheS = new URL(location).searchParams.get('cacheS');
 	console.log('Cache à garder:'+cacheS);
-	return caches.keys().then(noms=>{
-		for(var i=0;i<noms.length;i++){
-			if(noms[i]!=cacheS){
-				return caches.delete(noms[i]);
-				console.log('suppression du cache '+noms[i]);
-			}
-		}
-	});
-	caches.open(cacheS).then(cache=>{
+	return waitUntil(caches.open(cacheS)).then(cache=>{
 		return cache.addAll(['/index.html','/styles.css','/serviceWorker.js','/traitement.js']);//tout sauf version.txt //pas de résultat
 		console.log('Cache '+cacheS+ 'mis à jour');
-	});
+	});	
+	// return caches.keys().then(noms=>{
+		// for(var i=0;i<noms.length;i++){
+			// if(noms[i]!=cacheS){
+				// return caches.delete(noms[i]);
+				// console.log('suppression du cache '+noms[i]);
+			// }
+		// }
+	// });
+
 
 	// event.waitUntil(caches.open(cacheS))//on complète le cache
 	// .then(cache=>{
@@ -41,14 +42,13 @@ self.addEventListener('fetch', event => {
 		console.log('on laisse passer /version.txt');
 		return fetch(event.request);
 	}else{
-		console.log('Redirection de', event.request.url);
-		caches.open(cacheS).then(cache=>{
+		return caches.open(cacheS).then(cache=>{
 		  return cache.match(event.request).then(response=> {
 			if (response) {
-			  console.log('Réponse trouvée dans le cache:', response);
+			  console.log(event.request.url+':'+response);
 			  return response;
 			}else{
-				console.log('Pas de réponse dans le cache');
+				console.log(event.request.url+': Pas dans le cache');
 				//on veut cacher en amont, pas à la volée
 				// console.log('Réponse à charger sur le serveur');
 				// return fetch(event.request).then(networkResponse=>{

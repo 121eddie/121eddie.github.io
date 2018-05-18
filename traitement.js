@@ -11,17 +11,18 @@ window.addEventListener('message',cacheN=>{
 		}
 	}
 });
-
-refreshGPS();
-var mois=['jan','fev','mar','avr','mai','jui','jul','aug','sep','oct','nov','dec'];
+const mois=['jan','fev','mar','avr','mai','jui','jul','aug','sep','oct','nov','dec'];
 var destEmail=localStorage.getItem('destEmail');
 var destSMS=localStorage.getItem('destSMS');
 var latitude
 var longitude
 var precision
-var miseAjour;//variables globales pour ne pas avoir à les récupèrer à chaque fois dans la DOM
+// var miseAjour;//variables globales pour ne pas avoir à les récupèrer à chaque fois dans la DOM
+var jour;
+var seconde;
 var message;
 var connection=(window.navigator.onLine?'online':'offline');
+refreshGPS();
 console.log('connection:'+connection);
 document.getElementById('connection').innerHTML=connection;
 document.getElementById('destEmail').value=destEmail;
@@ -53,15 +54,18 @@ function success(pos) {
 	longitude=coord.longitude.toPrecision(6);
 	precision=coord.accuracy.toPrecision(6);
 	var d=new Date();
-	//29 avr 2018 19h37:05
-	var secDouble=(d.getSeconds()<10?'0':'')+d.getSeconds();
+	// miseAjour=d.getHours()+"h"+minuteDouble+":"+secDouble+', le '+d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
+	jour=d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
 	var minuteDouble=(d.getMinutes()<10?'0':'')+d.getMinutes();
-	miseAjour=d.getHours()+"h"+minuteDouble+":"+secDouble+',le '+d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
-	console.log('miseAjour:'+miseAjour);
+	var secDouble=(d.getSeconds()<10?'0':'')+d.getSeconds();
+	seconde=d.getHours()+"h"+minuteDouble+":"+secDouble;
+	// console.log('miseAjour:'+miseAjour);
+	console.log('jour:'+jour);
+	console.log('seconde:'+seconde);
 	document.getElementById("latitude").innerHTML=latitude;
 	document.getElementById("longitude").innerHTML=longitude;
 	document.getElementById("precision").innerHTML=precision;
-	document.getElementById("miseAjour").innerHTML=miseAjour;
+	document.getElementById("miseAjour").innerHTML=seconde;
 	console.log("Coordonnées mises à jour");
 	//mise à jour des variables globales
 	message="Mes coordonnées mesurées par l'appli Web Progressive\r\nLatitude: "+latitude+'\r\nLongitude: '+longitude+'\r\nPrécision: '+precision+'\r\nDernière mise à jour: '+miseAjour;
@@ -73,7 +77,7 @@ function success(pos) {
 	console.log('Blob '+blob+' créee');
 	var lien=document.getElementById("telecharger");
 	lien.setAttribute('href',url);
-	lien.setAttribute('download','Geolocalisation '+miseAjour+".txt");
+	lien.setAttribute('download','Geolocalisation '+seconde+', le '+jour+".txt");
 	console.log('Lien de téléchargement mis à jour');
 }
 
