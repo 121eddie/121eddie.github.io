@@ -44,7 +44,6 @@ function success(pos) {
 	precision=coord.accuracy.toPrecision(6);
 	var d=new Date();
 	// miseAjour=d.getHours()+"h"+minuteDouble+":"+secDouble+', le '+d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
-	console.log('jour:'+d.getDay());
 	jour=d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
 	var minuteDouble=(d.getMinutes()<10?'0':'')+d.getMinutes();
 	var secDouble=(d.getSeconds()<10?'0':'')+d.getSeconds();

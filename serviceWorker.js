@@ -5,13 +5,13 @@ self.addEventListener('install', event => {//lors du chargement de index.html
 });
 
 self.addEventListener('activate', async function(event) {
-	self.clients.claim();//le nouveau service worker prend le contrôle de toutes les pages ouvertes
+	self.clients.claim();//le nouveau service worker prend le contrôle de toutes les pages ouvertes de l'appli web progressive
 	console.log("ServiceWorker activé");
 	if (navigator.onLine){
 		var oReq = new Request('./version.txt?date='+new Date().getTime(), {method:'get'});
 		var response=await fetch(oReq);
-		var result=response.text();
-		console.log('Nouvelle version du cache: '+result);
+		var result=await response.json();
+		console.log('Nouvelle version du cache: '+result);//a distance: [object promise]
 		cache= await caches.open(result);
 		console.log('cache:'+cache);
 		for (var i=0;i<caches.length;i++){
@@ -20,7 +20,7 @@ self.addEventListener('activate', async function(event) {
 			}
 		}
 		// return (cache.addAll(['/index.html','/styles.css','/traitement.js']));//ne traite que la promise
-		try{await cache.addAll(['/index.html','/styles.css','/traitement.js']);//TypeError: Request failed
+		try{await cache.addAll(['/index.html','/styles.css','/traitement.js']);//en localhost: TypeError: Request failed
 		}catch (err){
 			console.log(err);
 		}//tout sauf version.txt //pas de résultat	
