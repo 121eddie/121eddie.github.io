@@ -10,7 +10,7 @@ self.addEventListener('activate', async function(event) {
 	if (navigator.onLine){
 		var oReq = new Request('./version.txt?date='+new Date().getTime(), {method:'get', headers: {"Accept": "application/json"}});
 		var response=await fetch(oReq);
-		var result=await response.json();
+		var result=await response.text();
 		console.log('Nouvelle version du cache: '+result);//a distance: [object promise]
 		cache= await caches.open(result);
 		console.log('cache:'+cache);
