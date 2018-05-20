@@ -1,0 +1,17 @@
+{  "name": "Déterminer ma position et la partager",
+	"short_name": "PositionWeb",
+	"start_url": "/index.html",
+	"display": "standalone",
+	"background_color": "#fff",
+	"description": "Une application Web Progressive qui permet de connaitre sa position et de la télecharger ou partager, même en mode offline",
+	"lang": "fr-FR",
+	​​"orientation": "portrait-primary",
+	"scope": "/",
+	"theme_color": "lightyellow",
+	"permissions": "[
+		"geolocation",
+		"fileSystem",
+		"fileSystem.write",
+		"notifications",
+	],
+ }

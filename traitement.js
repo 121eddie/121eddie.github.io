@@ -1,27 +1,16 @@
-//les service workers n'ont pas accès aux APIs synchrones
-//le processus suivant a donc du être délegué ici
-window.addEventListener('message',cacheN=>{
-	if (event.origin='/serviceWorker.js'){
-		var cacheS=localStorage.getItem('cacheS');//on prend le cache par defaut 
-		console.log('ancien cache:'+cacheS);
-		try{//on essaie de rafaîchir avec une requête IP
-
-		}catch(error){
-			console.log("La version du cache n'a pas pu être validée");
-		}
-	}
-});
 const mois=['jan','fev','mar','avr','mai','jui','jul','aug','sep','oct','nov','dec'];
 var destEmail=localStorage.getItem('destEmail');
 var destSMS=localStorage.getItem('destSMS');
-var latitude
-var longitude
-var precision
+var latitude;
+var longitude;
+var precision;
 // var miseAjour;//variables globales pour ne pas avoir à les récupèrer à chaque fois dans la DOM
 var jour;
 var seconde;
+var titre;
 var message;
 var connection=(window.navigator.onLine?'online':'offline');
+const lien=document.getElementById("telecharger");
 refreshGPS();
 console.log('connection:'+connection);
 document.getElementById('connection').innerHTML=connection;
@@ -55,6 +44,7 @@ function success(pos) {
 	precision=coord.accuracy.toPrecision(6);
 	var d=new Date();
 	// miseAjour=d.getHours()+"h"+minuteDouble+":"+secDouble+', le '+d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
+	console.log('jour:'+d.getDay());
 	jour=d.getDay()+' '+mois[d.getMonth()]+' '+d.getFullYear();
 	var minuteDouble=(d.getMinutes()<10?'0':'')+d.getMinutes();
 	var secDouble=(d.getSeconds()<10?'0':'')+d.getSeconds();
@@ -68,16 +58,15 @@ function success(pos) {
 	document.getElementById("miseAjour").innerHTML=seconde;
 	console.log("Coordonnées mises à jour");
 	//mise à jour des variables globales
-	message="Mes coordonnées mesurées par l'appli Web Progressive\r\nLatitude: "+latitude+'\r\nLongitude: '+longitude+'\r\nPrécision: '+precision+'\r\nDernière mise à jour: '+miseAjour;
+	titre='Geolocalisation '+seconde+', le '+jour+".txt";
+	message="Mes coordonnées mesurées par l'appli Web Progressive\r\nLatitude: "+latitude+'\r\nLongitude: '+longitude+'\r\nPrécision: '+precision+'\r\nDernière mise à jour: '+seconde+', le '+jour;
 	console.log("Variables globales mises à jour");
 	//mise à jour du fichier téléchargeable
 	var d=new Date();
 	var blob = new Blob([message], {type: 'text/plain',charset:'utf-8'});
 	var url=window.URL.createObjectURL(blob);
-	console.log('Blob '+blob+' créee');
-	var lien=document.getElementById("telecharger");
 	lien.setAttribute('href',url);
-	lien.setAttribute('download','Geolocalisation '+seconde+', le '+jour+".txt");
+	lien.setAttribute('download',titre);
 	console.log('Lien de téléchargement mis à jour');
 }
 
@@ -113,4 +102,12 @@ function sms(){
 	//var sms='sms:0649624189?body=message';//& pour iOS
 	window.location.href=sms;
 	console.log("SMS ouvert dans l'application SMS");
+}
+//https://chrome-apps-doc2.appspot.com/trunk/apps/fileSystem.html#type-ChooseEntryOptions
+function enregistrer(){
+	chrome.fileSystem.chooseEntry({type:'saveFile',suggestedName:titre,accepts:'txt'},file=>{
+		file.createWriter(writer=>{//succes de la creation du writer
+			writer.write(message);
+		},console.log('Echec de la création du writer'));
+	});
 }
