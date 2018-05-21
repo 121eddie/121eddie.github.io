@@ -1,6 +1,9 @@
-<HTML>
+<HTML lang='fr'>
 <HEAD>
 	<meta charset="utf-8">
+	<meta name="description" content="Une Application Web Progressive pour connaitre sa position et, la télecharger ou partager, même en mode offline">
+	<meta name="author" content="Eduard Ergenzinger, Yifang Wang">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<Title>Geolocalisation</Title>
 	<script type="text/javascript">
 	//ajoute dans le header pour satisfaire microsoft edge
@@ -58,8 +61,9 @@ Worker <i id='worker'>non activé</i><br>
 		<th width=120>Envoyer par<th>
 	</tr>
 	<tr>
+		<label for='destEmail' type='hidden'>Destinataire email</label> <!-- pour ameliorer l'indexation moteur de recherche -->
 		<td><input id='destEmail' type='text' maxlength=50></td>
-		<td><button onclick="email();">Email</td>
+		<td><button id='email' onclick="email();">Email</td>
 	</tr>
 	<tr>
 		<td><input id='destSMS' type='number' maxlength=15></td>

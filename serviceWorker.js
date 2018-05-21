@@ -1,6 +1,4 @@
 const cacheArray=['./index.html','./styles.css','./traitement.js','./manifest.json','./icon200.png','./icon512.png','./favicon.ico'];
-// const cacheArray=['.index.html','.styles.css','.traitement.js','.manifest.json','.icon.png'];
-// const cacheArray=['index.html','styles.css','traitement.js','manifest.json','icon.png'];
 self.addEventListener('install', event => {//lors du chargement de index.html
   self.skipWaiting();//il supplante tout de suite l'ancien
   console.log("ServiceWorker installé");
@@ -22,7 +20,6 @@ self.addEventListener('activate', event=> {
 	}
 });
 
-
 //ServiceListener standard qui met en cache tout ce qui passe
 //prévoit un chargement online avec mise en cache si quelquechose manque
 self.addEventListener('fetch', event=>{
@@ -38,25 +35,13 @@ self.addEventListener('fetch', event=>{
 	if (!trouve) return requete('./index.html');
 });
 
-// function requete(url){
-	// try{
-		// event.waitUntil(
-		// caches.match(url)
-		// .then(page=>{
-			// console.log('on sert '+url+' depuis le cache');
-			// return page;})
-		// );
-	// }catch(err){
-		// console.log('echec de '+url+': '+err);
-	// }
-// }
-
 async function requete(url){
 	try{
 		caches.open('ProgWebApp')
 		.then(cache=>cache.match(url))
 		.then(page=>{
 			console.log('on sert '+url+' depuis le cache');
+			page.status=200;//manipulation justifiée ici
 			return page;})
 	}catch(err){
 		console.log('echec de '+url+': '+err);
