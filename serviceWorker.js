@@ -1,4 +1,5 @@
-const cacheArray=['/icon.png','/index.html','/styles.css','/traitement.js','/manifest.json'];
+// const cacheArray=['/icon.png','/','/styles.css','/traitement.js','/manifest.json'];
+const cacheArray=['icon.png','.','styles.css','traitement.js','manifest.json'];
 self.addEventListener('install', event => {//lors du chargement de index.html
   self.skipWaiting();//il supplante tout de suite l'ancien
   console.log("ServiceWorker installé");
@@ -25,11 +26,11 @@ self.addEventListener('activate', event=> {
 //prévoit un chargement online avec mise en cache si quelquechose manque
 self.addEventListener('fetch', event=>{
 	console.log('Traitement du fetch '+event.request.url);
-	if (event.request.url="/") event.request.url='/index.html';//le service worker doit prendre en main la redirection
+	// if (event.request.url.endsWith="/") event.request.url='/index.html';//le service worker doit prendre en main la redirection
 	try{
 		event.waitUntil(
 		caches.match(event.request)
-		.then(()=>{
+		.then(request=>{
 			console.log('on sert '+event.request.url+' depuis le cache');
 			return request;})
 		);
