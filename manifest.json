@@ -12,7 +12,7 @@
 		"fileSystem.write",
 		"notifications"
 	],
-	"lang": "fr-FR",
+	"lang": "fr",
 	"background_color": "lightyellow",
 	"theme_color": "lightgreen",
 	"icons": [{"src": "icon200.png","sizes": "200x200","type": "image/png"},
