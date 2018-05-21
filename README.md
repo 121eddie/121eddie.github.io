@@ -7,7 +7,7 @@ source: https://whippet.telecom-lille.fr/mod/book/view.php?id=10298
  
 ⛔Pas réalisé
 🆗Réalisé
-fonctionnalité supplémentaire ou commentaire
+
 Développer une application web progressive en html5/css/javascript/json  🆗
 Déployer l'application sur un serveur HTTP et la tester avec un navigateur d'un smartphone android. 🆗
 L'application stocke les coordonnées GPS dans la mémoire du téléphone ⛔,=> les fait télecharger 🆗ou les partage (sms🆗, email🆗, fb⛔, etc..).
@@ -27,6 +27,8 @@ notepad++ ou autre (pas d'IDE complexe) ;🆗
 hébergement en localhost et sur https://121eddie.github.io/  🆗
 tests avec les outils de développement du navigateur ;🆗, Firefox Nightly et Chrome pour Android
 exécution sur smartphone android.🆗Adaptation de la mise en page aux smartphones
+
+
 
 
 Utilisation:
