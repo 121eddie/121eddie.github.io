@@ -1,5 +1,5 @@
 var cache;
-const cacheArray=['index.html','styles.css','traitement.js'];
+const cacheArray=['icon.png','index.html','styles.css','traitement.js','manifest.webmanifest'];
 self.addEventListener('install', event => {//lors du chargement de index.html
   self.skipWaiting();//il supplante tout de suite l'ancien
   console.log("ServiceWorker installé");
