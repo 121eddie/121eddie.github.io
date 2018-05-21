@@ -8,7 +8,7 @@ self.addEventListener('activate', async function(event){
 	self.clients.claim();//le nouveau service worker prend le contrôle de toutes les pages ouvertes de l'appli web progressive
 	console.log("ServiceWorker activé");
 	if (navigator.onLine){
-		var oReq = new Request('/version.txt?date='+new Date().getTime(), {method:'get'});
+		var oReq = new Request('version.txt?date='+new Date().getTime(), {method:'get'});
 		var response=await fetch(oReq);
 		var result=await response.text();
 		console.log('Nouvelle version du cache: '+result);//a distance: [object promise]
@@ -19,7 +19,7 @@ self.addEventListener('activate', async function(event){
 				caches[i].delete();
 			}
 		}
-		try{await cache.addAll(['/index.html','/styles.css','/traitement.js']);//en localhost: TypeError: Request failed
+		try{await cache.addAll(['index.html','styles.css','traitement.js']);//en localhost: TypeError: Request failed
 		}catch (err){
 			console.log(err);
 		}//tout sauf version.txt //pas de résultat	
