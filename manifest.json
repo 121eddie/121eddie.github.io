@@ -1,5 +1,5 @@
 {
-	"start_url": "./index.html",
+	"start_url": "/index.html",
 	"name": "Determiner ma position et la partager",
 	"short_name": "PositionWeb",
 	"homepage_url":"https://121eddie.github.io/index.html",
@@ -13,8 +13,8 @@
 		"notifications"
 	],
 	"lang": "fr-FR",
-	"background-color": "lightyellow",
-	"theme-color": "lightgreen",
+	"background_color": "lightyellow",
+	"theme_color": "lightgreen",
 	"icons": [{"src": "icon200.png","sizes": "200x200","type": "image/png"},
 	{"src": "icon512.png","sizes": "512x512","type": "image/png"}
 	]
