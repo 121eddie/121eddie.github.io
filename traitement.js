@@ -70,43 +70,48 @@ function success(pos) {
 }
 
 function error(err) {
-  console.warn('ERROR(${err.code}): ${err.message}');
+  console.warn('ERROR('+err.code+': '+err.message);
 }
 
 function email(){
+	//le destinataire est enregistré et affiché par défaut au prochain démarrage
 	if(document.getElementById('destEmail').value!=destEmail){
 		destEmail=document.getElementById('destEmail').value;
 		localStorage.setItem('destEmail',destEmail);
 		console.log("Destinataire Email enregistré");
 	}
 	var subject='mes coordonnees';
+	//encodage
 	var ecMessage=encodeURIComponent(message);
+	//on prépare la délégation à l'application système
 	var email='mailto:'+destEmail+'?subject='+subject+'&body='+ecMessage;
-	// confirmation=window.confirm(email);
-	// if(confirmation==true){
+	console.log('ordre'+email);
+	//ordre lancé
 	window.location.href=email;
 	console.log("Email ouvert dans l'application de messagerie");
 }
 
 function sms(){
+	//le destinataire est enregistré et affiché par défaut au prochain démarrage
 	if(document.getElementById('destSMS').value!=destSMS){
 		console.log("Destinataire SMS enregistré");
 		destSMS=document.getElementById('destSMS').value;
 		localStorage.setItem('destSMS',destSMS);
 	}
 	var ecMessage=encodeURIComponent(message);
-	console.log(ecMessage);
 	var sms='sms:'+destSMS+'?body='+ecMessage;//& pour iOS
-	console.log(sms);
-	//var sms='sms:0649624189?body=message';//& pour iOS
+	console.log('ordre '+sms);
+	//ordre lancé
 	window.location.href=sms;
 	console.log("SMS ouvert dans l'application SMS");
 }
+
+
 //https://chrome-apps-doc2.appspot.com/trunk/apps/fileSystem.html#type-ChooseEntryOptions
 function enregistrer(){
 	chrome.fileSystem.chooseEntry({type:'saveFile',suggestedName:titre,accepts:'txt'},file=>{
 		file.createWriter(writer=>{//succes de la creation du writer
-			writer.write(message);
+			return writer.write(message);
 		},console.log('Echec de la création du writer'));
 	});
 }
