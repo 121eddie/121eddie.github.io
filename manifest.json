@@ -6,8 +6,6 @@
 	"display": "standalone",
 	"description": "Une application Web Progressive qui permet de connaitre sa position et de la telecharger ou partager, meme en mode offline",
 	"scope": "/",
-	"background": "lightyellow",
-	"theme": "lightgreen",
 	"permissions": [
 		"geolocation",
 		"fileSystem",
