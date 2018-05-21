@@ -3,5 +3,6 @@
 	"version": "0.1",
 	"name": "Déterminer ma position et la partager",
 	"short_name": "PositionWeb",
+	"scope": ".",
 	"start_url": "index.html",
  }
