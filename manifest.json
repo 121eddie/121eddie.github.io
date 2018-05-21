@@ -1,11 +1,13 @@
 {
-	"name": "Déterminer ma position et la partager",
-	"short_name": "PositionWeb",
-	"scope": ".",
-	"start_url": "index.html",
-	"icons": [{
+  "name": "HackerWeb",
+  "short_name": "HackerWeb",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "A simply readable Hacker News app.",
+  "icons": [{
     "src": "icon.png",
     "sizes": "200x200",
     "type": "image/png"
-	}]
- }
+  }]
+}
