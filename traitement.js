@@ -108,7 +108,8 @@ function sms(){
 
 
 //https://chrome-apps-doc2.appspot.com/trunk/apps/fileSystem.html#type-ChooseEntryOptions
-function enregistrer(){
+var enregistrer = document.getElementById("enregistrer");
+enregistrer.onclick=function (){
 	chrome.fileSystem.chooseEntry({type:'saveFile',suggestedName:titre,accepts:'txt'},file=>{
 		file.createWriter(writer=>{//succes de la creation du writer
 			return writer.write(message);
