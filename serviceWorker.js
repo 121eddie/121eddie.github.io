@@ -1,5 +1,6 @@
 // const cacheArray=['/icon.png','/','/styles.css','/traitement.js','/manifest.json'];
-const cacheArray=['icon.png','.','styles.css','traitement.js','manifest.json'];
+//const cacheArray=['icon.png','.','styles.css','traitement.js','manifest.json'];
+const cacheArray=['./','./index.html','./styles.css','./traitement.js','./manifest.json','./icon.png'];
 self.addEventListener('install', event => {//lors du chargement de index.html
   self.skipWaiting();//il supplante tout de suite l'ancien
   console.log("ServiceWorker installé");
@@ -35,6 +36,6 @@ self.addEventListener('fetch', event=>{
 			return request;})
 		);
 	}catch(err){
-		console.log(event.request+'not cached: '+err);
+		console.log('echec de '+event.request+': '+err);
 	}
 });
