@@ -8,7 +8,7 @@
 	"scope": "/",
 	"permissions": [
 		"geolocation",
-		"fileSystem",
+		{"fileSystem": ["write"]},
 		"fileSystem.write",
 		"notifications"
 	],
