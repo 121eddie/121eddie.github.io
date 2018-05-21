@@ -2,21 +2,22 @@
 <HEAD>
 	<meta charset="utf-8">
 	<Title>Geolocalisation</Title>
-</HEAD>
-<script type="text/javascript">
-window.addEventListener('load', async function(){
+	<script type="text/javascript">
+	window.addEventListener('load', async function(){
 	if ( 'serviceWorker' in navigator ) {
 		try{
 		var registration=await navigator.serviceWorker.register('serviceWorker.js');
-		console.log('ServiceWorker installé avec le scope: ', registration.scope);
+		console.log('ServiceWorker enregistré avec le scope: ', registration.scope);
 		document.getElementById('worker').innerHTML='serviceWorker.js actif';
 		document.getElementById('cache').innerHTML='Cache actif';
 		}catch (err){
 		console.log(err);
 		}
 	}else{window.alert('Votre navigateur ne supporte pas les Service Workers. Ce site ne fonctionnera pas en mode offline');};
-});
-</script>
+	});
+	</script>
+</HEAD>
+
 <!-- <link rel="manifest" href="/manifest.webmanifest"> -->
 <link rel="stylesheet" type="text/css" href="styles.css">
 <BODY>

@@ -4,7 +4,7 @@ self.addEventListener('install', event => {//lors du chargement de index.html
   console.log("ServiceWorker installé");
 });
 
-self.addEventListener('activate', async function(event) {
+self.addEventListener('activate', async function(event){
 	self.clients.claim();//le nouveau service worker prend le contrôle de toutes les pages ouvertes de l'appli web progressive
 	console.log("ServiceWorker activé");
 	if (navigator.onLine){
@@ -25,22 +25,6 @@ self.addEventListener('activate', async function(event) {
 		}//tout sauf version.txt //pas de résultat	
 	}
 });
-// self.addEventListener('activate', event => {
-	// self.clients.claim();//le nouveau service worker prend le contrôle de toutes les pages ouvertes de l'appli web progressive
-	// console.log("ServiceWorker activé");
-		// if (navigator.onLine){
-					// var oReq = new Request('./version.txt?date='+new Date().getTime(), {method:'get'});
-			// event.waitUntil(fetch(oReq))
-    // .then(response=>return caches.open(response)).then(cache=>return cache.keys()).then(keys => Promise.all(
-      // keys.map(key => {
-          // return caches.delete(key);
-        // }
-    // ))).then(() => {
-      // console.log('V2 now ready to handle fetches!');
-    // })
-  // );
-// });
-
 
 //ServiceListener standard qui met en cache tout ce qui passe
 //prévoit un chargement online avec mise en cache si quelquechose manque
