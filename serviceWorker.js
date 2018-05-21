@@ -1,6 +1,6 @@
-// const cacheArray=['/icon.png','/','/styles.css','/traitement.js','/manifest.json'];
-//const cacheArray=['icon.png','.','styles.css','traitement.js','manifest.json'];
-const cacheArray=['./','./index.html','./styles.css','./traitement.js','./manifest.json','./icon.png'];
+// const cacheArray=['./','./index.html','./styles.css','./traitement.js','./manifest.json','./icon.png'];
+// const cacheArray=['.index.html','.styles.css','.traitement.js','.manifest.json','.icon.png'];
+const cacheArray=['index.html','styles.css','traitement.js','manifest.json','icon.png'];
 self.addEventListener('install', event => {//lors du chargement de index.html
   self.skipWaiting();//il supplante tout de suite l'ancien
   console.log("ServiceWorker installé");
@@ -26,16 +26,38 @@ self.addEventListener('activate', event=> {
 //ServiceListener standard qui met en cache tout ce qui passe
 //prévoit un chargement online avec mise en cache si quelquechose manque
 self.addEventListener('fetch', event=>{
-	console.log('Traitement du fetch '+event.request.url);
-	// if (event.request.url.endsWith="/") event.request.url='/index.html';//le service worker doit prendre en main la redirection
-	try{
-		event.waitUntil(
-		caches.match(event.request)
-		.then(request=>{
-			console.log('on sert '+event.request.url+' depuis le cache');
-			return request;})
-		);
-	}catch(err){
-		console.log('echec de '+event.request+': '+err);
+	var url=event.request.url;
+	var trouve=false;
+	console.log('Traitement du fetch '+url);
+	for (var i=0;i<cacheArray.length;i++){
+		if (url.endsWith(cacheArray[i])){
+			trouve=true;
+			return requete(url);
+		}
 	}
+	if (!trouve) return requete('index.html');
 });
+
+// function requete(url){
+	// try{
+		// event.waitUntil(
+		// caches.match(url)
+		// .then(page=>{
+			// console.log('on sert '+url+' depuis le cache');
+			// return page;})
+		// );
+	// }catch(err){
+		// console.log('echec de '+url+': '+err);
+	// }
+// }
+
+async function requete(url){
+	try{
+		caches.match(url)
+		.then(page=>{
+			console.log('on sert '+url+' depuis le cache');
+			return page;})
+	}catch(err){
+		console.log('echec de '+url+': '+err);
+	}
+}
