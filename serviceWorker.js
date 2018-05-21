@@ -30,7 +30,7 @@ self.addEventListener('fetch', event=>{
 	var trouve=false;
 	console.log('Traitement du fetch '+url);
 	for (var i=0;i<cacheArray.length;i++){
-		if (url.endsWith(cacheArray[i])){
+		if (url.endsWith(cacheArray[i].substr(1))){
 			trouve=true;
 			return requete(url);
 		}
