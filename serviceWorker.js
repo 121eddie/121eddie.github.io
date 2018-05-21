@@ -25,14 +25,15 @@ self.addEventListener('activate', event=> {
 //prévoit un chargement online avec mise en cache si quelquechose manque
 self.addEventListener('fetch', event=>{
 	console.log('Traitement du fetch '+event.request.url);
-		try{
-			event.waitUntil(
-			caches.match(event.request)
-			.then(request=>{
-				console.log('on sert '+event.request.url+' depuis le cache');
-				return request;})
-			);
-		}catch(err){
-			console.log(event.request+'not cached: '+err);
-		}
+	if (event.request.url="/") event.request.url='/index.html';//le service worker doit prendre en main la redirection
+	try{
+		event.waitUntil(
+		caches.match(event.request)
+		.then(()=>{
+			console.log('on sert '+event.request.url+' depuis le cache');
+			return request;})
+		);
+	}catch(err){
+		console.log(event.request+'not cached: '+err);
+	}
 });
