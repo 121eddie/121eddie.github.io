@@ -1,4 +1,4 @@
-const cacheArray=['./index.html','./styles.css','./traitement.js','./manifest.json','./icon.png'];
+const cacheArray=['./index.html','./styles.css','./traitement.js','./manifest.json','./icon.png','./favicon.ico'];
 // const cacheArray=['.index.html','.styles.css','.traitement.js','.manifest.json','.icon.png'];
 // const cacheArray=['index.html','styles.css','traitement.js','manifest.json','icon.png'];
 self.addEventListener('install', event => {//lors du chargement de index.html
