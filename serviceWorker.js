@@ -53,7 +53,8 @@ self.addEventListener('fetch', event=>{
 
 async function requete(url){
 	try{
-		caches.match(url)
+		caches.open('ProgWebApp')
+		.then(cache=>cache.match(url))
 		.then(page=>{
 			console.log('on sert '+url+' depuis le cache');
 			return page;})
