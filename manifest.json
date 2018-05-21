@@ -12,6 +12,9 @@
 		"fileSystem.write",
 		"notifications"
 	],
+	"lang": "fr-FR",
+	"background-color": "lightyellow",
+	"theme-color": "lightgreen",
 	"icons": [{"src": "icon200.png","sizes": "200x200","type": "image/png"},
 	{"src": "icon512.png","sizes": "512x512","type": "image/png"}
 	]
