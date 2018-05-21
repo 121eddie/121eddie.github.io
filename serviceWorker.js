@@ -1,12 +1,12 @@
-// const cacheArray=['./','./index.html','./styles.css','./traitement.js','./manifest.json','./icon.png'];
+const cacheArray=['./index.html','./styles.css','./traitement.js','./manifest.json','./icon.png'];
 // const cacheArray=['.index.html','.styles.css','.traitement.js','.manifest.json','.icon.png'];
-const cacheArray=['index.html','styles.css','traitement.js','manifest.json','icon.png'];
-self.addEventListener('install', event => {//lors du chargement de index.html
+// const cacheArray=['index.html','styles.css','traitement.js','manifest.json','icon.png'];
+self.addEventListener(document, 'install', event => {//lors du chargement de index.html
   self.skipWaiting();//il supplante tout de suite l'ancien
   console.log("ServiceWorker installé");
 });
 
-self.addEventListener('activate', event=> {
+self.addEventListener(document,'activate', event=> {
 	self.clients.claim();//le nouveau service worker prend le contrôle de toutes les pages ouvertes de l'appli web progressive
 	console.log("ServiceWorker activé");
 	if (navigator.onLine){
@@ -25,7 +25,7 @@ self.addEventListener('activate', event=> {
 
 //ServiceListener standard qui met en cache tout ce qui passe
 //prévoit un chargement online avec mise en cache si quelquechose manque
-self.addEventListener('fetch', event=>{
+self.addEventListener(document, 'fetch', event=>{
 	var url=event.request.url;
 	var trouve=false;
 	console.log('Traitement du fetch '+url);
@@ -35,7 +35,7 @@ self.addEventListener('fetch', event=>{
 			return requete(url);
 		}
 	}
-	if (!trouve) return requete('index.html');
+	if (!trouve) return requete('./index.html');
 });
 
 // function requete(url){
