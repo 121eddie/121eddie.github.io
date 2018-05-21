@@ -106,10 +106,9 @@ function sms(){
 	console.log("SMS ouvert dans l'application SMS");
 }
 
-
-//https://chrome-apps-doc2.appspot.com/trunk/apps/fileSystem.html#type-ChooseEntryOptions
 var enregistrer = document.getElementById("enregistrer");
 enregistrer.onclick=function (){
+	console.log('enregistrer');
 	chrome.fileSystem.chooseEntry({type:'saveFile',suggestedName:titre,accepts:'txt'},file=>{
 		file.createWriter(writer=>{//succes de la creation du writer
 			return writer.write(message);
