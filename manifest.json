@@ -1,19 +1,11 @@
 {
-	"manifest_version": 2,
-	"version": "0.1",
 	"name": "Déterminer ma position et la partager",
 	"short_name": "PositionWeb",
+	"scope": ".",
 	"start_url": "index.html",
-	"homepage_url":"https://121eddie.github.io/",
-	"display": "standalone",
-	"description": "Une application Web Progressive qui permet de connaitre sa position et de la telecharger ou partager, meme en mode offline",
-	"lang": "fr-FR",
-	"scope": "/",
-	"theme_color": "lightyellow",
-	"permissions": [
-		"geolocation",
-		"fileSystem",
-		"fileSystem.write",
-		"notifications"
-	]
+	"icons": [{
+    "src": "icon.png",
+    "sizes": "200x200",
+    "type": "image/png"
+	}]
  }

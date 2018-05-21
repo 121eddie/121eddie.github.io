@@ -9,7 +9,11 @@ self.addEventListener('activate', event=> {
 	console.log("ServiceWorker activé");
 	if (navigator.onLine){
 		try{
-			event.waitUntil(caches.open('ProgWebApp').then(cache=>cache.addAll(cacheArray)).then(console.log('pages cachéees')));
+			event.waitUntil(
+			caches.open('ProgWebApp')
+			.then(cache=>cache.addAll(cacheArray))
+			.then(console.log('pages cachéees'))
+			);
 		}catch (err){
 			console.log(err);
 		}
@@ -22,10 +26,13 @@ self.addEventListener('activate', event=> {
 self.addEventListener('fetch', event=>{
 	console.log('Traitement du fetch '+event.request.url);
 		try{
-			event.waitUntil(caches.match(event.request)
+			event.waitUntil(
+			caches.match(event.request)
 			.then(request=>{
 				console.log('on sert '+event.request.url+' depuis le cache');
 				return request;})
 			);
-		}catch(err){console.log(event.request+'not cached: '+err);}
+		}catch(err){
+			console.log(event.request+'not cached: '+err);
+		}
 });
