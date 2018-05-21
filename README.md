@@ -2,8 +2,7 @@
 encadré par Pierre Vincent
 réalisé par Yifan Wang et Eduard Ergenzinger
 
-Cahier des charges et réalisation
-source: https://whippet.telecom-lille.fr/mod/book/view.php?id=10298
+Cahier des charges https://whippet.telecom-lille.fr/mod/book/view.php?id=10298
  
 ⛔Pas réalisé
 🆗Réalisé
@@ -50,5 +49,3 @@ Il peut enregistrer le fichier texte sur son SGF grâce au lien 'Telecharger mes
 Il peut saisir un destinataire email ou SMS et cliquer sur 'Email' ou 'SMS' pour lui envoyer un Email ou SMS avec l'application locale respective.
 L'adresse du destinataire est enregistrée localement lors de l'envoi pour étre à nouveau proposé lors de la prochaine connection.
 L'utilisateur peut aussi choisir de ne pas saisr d'adresse sur l'Appli Web Progressive, mais de le faire dans le l'application EMail ou SMS.
-
-
