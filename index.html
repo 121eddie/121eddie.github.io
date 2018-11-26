@@ -1,23 +1,23 @@
-<HTML lang='fr'>
+<HTML lang='en'>
 <HEAD>
 	<meta charset="utf-8">
-	<meta name="description" content="Une Application Web Progressive pour connaitre sa position et, la télecharger ou partager, même en mode offline">
-	<meta name="author" content="Eduard Ergenzinger, Yifang Wang">
+	<meta name="description" content="A progressive Web App for mindfull reading">
+	<meta name="author" content="Eduard Ergenzinger, Pranita ">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<Title>Geolocalisation</Title>
+	<Title>Login</Title>
 	<script type="text/javascript">
-	//ajoute dans le header pour satisfaire microsoft edge
+	//For comaptibility with Microsoft Edge
 	window.addEventListener('load', async function(){
 	if ( 'serviceWorker' in navigator ) {
 		try{
 		var registration=await navigator.serviceWorker.register('./serviceWorker.js');
-		console.log('ServiceWorker enregistré avec le scope: ', registration.scope);
-		document.getElementById('worker').innerHTML='serviceWorker.js actif';
-		document.getElementById('cache').innerHTML='Cache actif';
+		console.log('ServiceWorker was successfully installed with scope: ', registration.scope);
+		document.getElementById('worker').innerHTML='serviceWorker.js active';
+		document.getElementById('cache').innerHTML='Cache active';
 		}catch (err){
 		console.log(err);
 		}
-	}else{window.alert('Votre navigateur ne supporte pas les Service Workers. Ce site ne fonctionnera pas en mode offline');};
+	}else{window.alert('Your browser does not support Service Workers, you will have to fetch the pages online every time');};
 	});
 	</script>
 </HEAD>
@@ -29,19 +29,19 @@
 <link rel="stylesheet" type="text/css" href="./styles.css">
 
 <BODY>
-<h1>Déterminer ma position et la partager</h1>
-<sinfo>Chargé en mode <i id='connection'>offline</i><br>
-Worker <i id='worker'>non activé</i><br>
-<a id='cache'>Pas de cache local</a></sinfo><br>
-<!--afficher la position GPS-->
+<h1>Login</h1>
+<sinfo>Page loaded in <i id='connection'>offline</i> mode<br>
+Service Worker <i id='worker'>inactive</i><br>
+<a id='cache'>No cache</a></sinfo><br>
+<!--Login or Registration-->
 <h2>Ma Position GPS</h2>
-<table class='position' id='tablePosition'>
+<table class='LRTable' id='LRForm'>
 	<tr>
 		<th>Latitude</th>
 		<th>Longitude</th>
 		<th>Précision</th>
 		<th>Mise à jour</th>
-		<th rowspan=2><button onclick="refreshGPS();">Mettre à jour</button></th>
+		<th><button onclick="login();">Login</button></th>
 	</tr>
 	<tr>
 		<td id='latitude'></td>
