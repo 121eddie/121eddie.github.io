@@ -6,7 +6,7 @@ realised by Pranita   and Eduard Ergenzinger 安东
 
 **_Progressive Web App in html5/css/javascript/json  🆗
 
-**_Functionalities
+**_Functionalities_**
 
 Progressive Web App installed on smartphone with manifest.json 🆗
 Saved in Browser with Service Worker 🆗
