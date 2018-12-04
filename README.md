@@ -12,7 +12,7 @@ Progressive Web App installed on smartphone with manifest.json 🆗
 Saved in Browser with Service Worker 🆗
 Suggests meaningfull readings to user ⛔
 
-**_Login and registration
+**_Login and registration_
 
 **Registration 1 - all requests through server**
 index.html - user is prompted to log in or register
