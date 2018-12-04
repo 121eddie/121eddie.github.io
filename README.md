@@ -1,51 +1,54 @@
-# ilog2018 Projet 7
-encadré par Pierre Vincent
-réalisé par Yifan Wang et Eduard Ergenzinger
-
-Cahier des charges https://whippet.telecom-lille.fr/mod/book/view.php?id=10298
+# ReadMinds
+realised by Pranita   and Eduard Ergenzinger 安东
  
-⛔Pas réalisé
-🆗Réalisé
+⛔Todo
+🆗Done
 
-Développer une application web progressive en html5/css/javascript/json  🆗
-Déployer l'application sur un serveur HTTP et la tester avec un navigateur d'un smartphone android. 🆗
-L'application stocke les coordonnées GPS dans la mémoire du téléphone ⛔,=> les fait télecharger 🆗ou les partage (sms🆗, email🆗, fb⛔, etc..).
-Évaluer les possibilités pour exécuter l'application offline (ni 4G, ni wifi) 🆗il faut lancer en mode appli web progressive depuis l’écran d’accueil ou alors rouvrir le navigateur
+**_Progressive Web App in html5/css/javascript/json  🆗
 
-Application Web Progressive
-fichier manifest.json 🆗avec attribution des droits d’accès
+**_Functionalities
 
-Différentes pistes pour l'exécution offline :
-fichier manifest.json mais directive cache obsolète ;
-workers complexes ; 🆗
-étudier la possibilité de charger une page locale (fichier) ;
-chrome64 etc...
+Progressive Web App installed on smartphone with manifest.json 🆗
+Saved in Browser with Service Worker 🆗
+Suggests meaningfull readings to user ⛔
 
-Réalisation :
-notepad++ ou autre (pas d'IDE complexe) ;🆗
-hébergement en localhost et sur https://121eddie.github.io/  🆗
-tests avec les outils de développement du navigateur ;🆗, Firefox Nightly et Chrome pour Android
-exécution sur smartphone android.🆗Adaptation de la mise en page aux smartphones
+**_Login and registration
 
+**Registration 1 - all requests through server**
+index.html - user is prompted to log in or register
+the results are sent to server with php request
+server logs into the database
+server verifies identity of user
 
+after that, ajax request to the server
 
+=>inefficient
 
-Utilisation:
-L'utilisateur (PC ou smartphone android) consulte https://121eddie.github.io/index.html sur Google Chrome. C'est la seule page qui lui est montrée, les autres jouent un rôle de support.
+**Registration 2 - Direct queries to MongoDB**
+server settings: allows reader account, with limited rights
 
-/index.html, lance l'installation de /serviceWorker.js.
-Lors de son activation, serviceWorker.js met en cache ['./index.html','./styles.css','./traitement.js','./manifest.json','./icon200.png','./icon512.png','./favicon.ico']
+user fills registration form
 
-Si le site est lancé depuis un smartphone, le navigateur demande à l'utilisateur s'il veut installer le manifest.json sur l'écran d'acceuil en tant qu'Appli Web Progressive, avec une des 2 icônes. 
-Cette Appli Web Progressive donne ensuite accès à une version simplifiée du navigateur (sans barre de saisie ou paramètres) restreinte au domaine https://121eddie.github.io, sans barre de navigation ni paramètres. 
+**variant 1_: validity of regitration info checked on client side (ajax)**
+anonymous connection to database (security issue 1)
+check non-existence of user information
+add database reader-user (corruption/security issue 2)
+stored with service worker
+login as reader-user
+add user info in database
 
-Ensuite, quel que soit l'état de connection de la machine (online/offline, navigateur ou Appli Web Progressive), le service worker va intercepter toutes les fetches du domaine https://121eddie.github.io et y répondre avec le cache (page /index.html par défaut). (Lors du passage online=>offline, l'utilisateur doit relancer l'Appli Web Progressive ou le navigateur).
+**variant 2: validity of regitration info checked on server side**
+registration request to server (php or ajax)
+server connects to database
+server checks i) non-existence of user ii) validity of registration data
+server adds user info to database
+server creates database user and transmits user login info
+stored with service worker
 
+=>better consistency, makes security possible
 
-Lors du lancement, les données GPS locales sont affichées sur le site et un fichier texte local crée avec ces données.
-L'utilisateur peut repéter cette opération manuellement avec le bouton 'Mettre à jour'.
+**Login**
+User logs in to database
 
-Il peut enregistrer le fichier texte sur son SGF grâce au lien 'Telecharger mes coordonnees'.
-Il peut saisir un destinataire email ou SMS et cliquer sur 'Email' ou 'SMS' pour lui envoyer un Email ou SMS avec l'application locale respective.
-L'adresse du destinataire est enregistrée localement lors de l'envoi pour étre à nouveau proposé lors de la prochaine connection.
-L'utilisateur peut aussi choisir de ne pas saisr d'adresse sur l'Appli Web Progressive, mais de le faire dans le l'application EMail ou SMS.
+**_Read Page
+
