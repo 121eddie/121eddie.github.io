@@ -29,43 +29,40 @@
 <link rel="stylesheet" type="text/css" href="./styles.css">
 
 <BODY>
-<h1>Login</h1>
+<h1>Status</h1>
 <sinfo>Page loaded in <i id='connection'>offline</i> mode<br>
 Service Worker <i id='worker'>inactive</i><br>
 <a id='cache'>No cache</a></sinfo><br>
 <!--Login or Registration-->
-<h2>Ma Position GPS</h2>
+<!--Login left-->
 <table class='LRTable' id='LRForm'>
 	<tr>
-		<th>Latitude</th>
-		<th>Longitude</th>
-		<th>Précision</th>
-		<th>Mise à jour</th>
-		<th><button onclick="login();">Login</button></th>
+		<th>Login</th>
+		<th>Register</th>
 	</tr>
 	<tr>
-		<td id='latitude'></td>
-		<td id='longitude'></td>
-		<td id='precision'></td>
-		<td id='miseAjour'></td>
+		<th>
+			<form id=login>
+			Username:<br>
+			<input type="text" name="username"><br>
+			Password:<br>
+ 			<input type="password" name="pwd"><br>
+			<th><button onclick="login();">Login</button></th>	
+			</form>
+		</th>
+		<th>
+			<form id=register>
+			Username:<br>
+			<input type="text" name="username"><br>
+			Password:<br>
+ 			<input type="password" name="pwd"><br>
+			<input type="password" name="pwd2"><br>
+			<th><button onclick="register();">Register</button></th>
+			</form>
+		</th>
 	</tr>
 </table><br>
-<h2><a id='telecharger'>Telecharger mes coordonnees</a></h2>
-<h2>Partager ma position</h2>
-<table class='envoi'>
-	<tr>
-		<th>Destinataire</th>
-		<th width=120>Envoyer par<th>
-	</tr>
-	<tr>
-		<td><input id='destEmail' type='text' maxlength=50></td>
-		<td><button id='email' onclick="email();">Email</td>
-	</tr>
-	<tr>
-		<td><input id='destSMS' type='number' maxlength=15></td>
-		<td><button onclick="sms();">SMS</td>
-	</tr>
-</table>
+
 </BODY>
 </HTML>
 <!--concentre toutes les fonctions de traitement-->
