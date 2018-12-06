@@ -19,7 +19,27 @@
 		}
 	}else{window.alert('Your browser does not support Service Workers, you will have to fetch the pages online every time');};
 	});
+		
+	//connect to mongodb
+	const MongoClient = require('mongodb').MongoClient;
+	const assert = require('assert');
+
+	// Connection URL
+	const url = 'mongodb://mindread-shard-00-01-vxcck.gcp.mongodb.net:27017';
+
+	// Database Name
+	const dbName = 'MindRead';
+
+	// Use connect method to connect to the server
+	MongoClient.connect(url, function(err, client) {
+	  assert.equal(null, err);
+	  console.log("Connected successfully to server");
+	  const db = client.db(dbName);
+
+	  client.close();
+	});
 	</script>
+	
 </HEAD>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="lightgreen">
