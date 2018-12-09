@@ -25,17 +25,17 @@
 	const assert = require('assert');
 
 	// Connection URL
-	const url = 'mongodb://mindread-shard-00-01-vxcck.gcp.mongodb.net:27017';
+	const mongoDbServer = 'mongodb://mindread-shard-00-01-vxcck.gcp.mongodb.net:27017';
 
 	// Database Name
 	const dbName = 'MindRead';
 
 	// Use connect method to connect to the server
-	MongoClient.connect(url, function(err, client) {
-	  assert.equal(null, err);
-	  console.log("Connected successfully to server");
-	  const db = client.db(dbName);
-
+	MongoClient.connect(mongoDbServer, function(err, client) {
+	  if(error)
+          console.log("Error while connecting to database: ", error);
+          else
+          console.log("Successfull connection to MongoDB Server");
 	  client.close();
 	});
 	</script>
